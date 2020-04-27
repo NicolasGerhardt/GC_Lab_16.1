@@ -28,10 +28,20 @@ namespace GC_Lab_16._1.Controllers
             return View(new User());
         }
 
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult UserPref(User u)
         {
             //All validation is on the Client Side per the assignment. 
+
+            //Obsecuring Password on server side before sending back to view. 
+            u.Password = string.Empty;
+            foreach (char l in u.ConfirmPassword)
+            {
+                u.Password += "*";
+            }
+            u.ConfirmPassword = u.Password;
+
             return View(u);
         }
 
